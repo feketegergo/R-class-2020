@@ -4,9 +4,9 @@ library(tidyverse)
 file1<-"/home/feketeg/eclipse-workspaces/ws3-forEclipseOxigen/MORPHOLOGY-2018/mater-BRANCH/Morphology-2018-Karcsi/data/GLMM-normalisation/cell_level_normalisation/calmorph_data-normalised-formula3-cell_level-use_for_paper-A.rds"
 
 
-tbl1<-read_rds(file1)
-tbl1<-tbl1 %>%  filter(is_ok)
-tbl1<-tbl1 %>%  sample_n(size=150,replace = FALSE)
+tbl1 <- read_rds(file1)
+tbl1 <- tbl1 %>%  filter(is_ok)
+tbl1 <- tbl1 %>%  sample_n(size=150,replace = FALSE)
 
 tbl1<-tbl1 %>% select(genotypeID,grep("^C\\d.*",names(tbl1),value = TRUE))
 
