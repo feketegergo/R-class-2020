@@ -1,8 +1,8 @@
 library("tidyverse")
 
-mean_NT<-1.2
-sigma_NT<-0.25
-N_b<-5000
+mean_NT <- 1.2
+sigma_NT <- 0.25
+N_b <- 5000
 
 
 tbl2<-tibble( experiment_id=character(),p=numeric(), type=character())
