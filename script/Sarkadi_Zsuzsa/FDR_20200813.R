@@ -9,3 +9,17 @@ kezeltAMP <- rnorm(3, mean=1.1, sd=0.4)
 
 t.test(kezeletlen, kezeltAMP)
 
+#15-15 minta
+kezeletlen <- rnorm(15, mean=1.2, sd=0.25)
+kezeltAMP <- rnorm(15, mean=1.1, sd=0.4)
+t.test(kezeletlen, kezeltAMP)
+#10 kezelt és 3 kezeletlen
+kezeletlen <- rnorm(3, mean=1.2, sd=0.25)
+kezeltAMP <- rnorm(10, mean=1.1, sd=0.4)
+t.test(kezeletlen, kezeltAMP)
+# kezelt is kezeletlen
+kezeletlen <- rnorm(15, mean=1.2, sd=0.25)
+kezeltAMP <- rnorm(15, mean=1.2, sd=0.25)
+t.test(kezeletlen, kezeltAMP)
+
+
