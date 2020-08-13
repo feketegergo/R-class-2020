@@ -31,9 +31,21 @@ tbl1 <- tibble(experiment_id=character(), p=numeric(), type=character())
 
 
 for(i in 1:5000) {
-  sprintf("exp_%03d",tbl1[i] )
+  kezeletlen <- rnorm(3, mean=1.2, sd=0.25)
+  kezeltAMP <- rnorm(3, mean=1.1, sd=0.4)
+  result_ttest <- t.test(kezeletlen, kezeltAMP)
+  tbl1 <- tbl1 %>% add_row(experiment_id=sprintf("exp_%03i",i), 
+                           p=result_ttest$p.value, type="NT-AMP")
 }
-i
-p=t.test(kezeletlen, kezeltAMP)$p.value    
-sprintf("exp_%03d",i )
 
+#Feladat 4
+library(ggplot2)
+tbl1 %>%
+  ggplot(aes(x=p))+geom_histogram(color="black", fill="white")+
+  geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1) 
+  ggsave("out/undersatndig-of-FDR/histogram_pvalue.jpg")
+  
+tbl1 %>%
+    ggplot(aes(x=p))+geom_histogram(color="black", fill="white", binwidth = 0.10)+
+    geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)
+ggsave("out/undersatndig-of-FDR/histogram_pvalue_largebin.jpg")
