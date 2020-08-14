@@ -12,12 +12,12 @@ sigma_AMP<-0.8
 N_noEffect<-4000
 N_effect<-400
 
-od_NT<-rnorm(10,mean = mean_NT, sd = sigma_NT)
+od_NT<-rnorm(15,mean = mean_NT, sd = sigma_NT)
 
 tbl1<-tibble( experiment_id=character(),p=numeric(), type=character())
 for( i in 1:N_noEffect)
 {
-#  od_NT<-rnorm(4,mean = mean_NT, sd = sigma_NT)
+  #od_NT<-rnorm(4,mean = mean_NT, sd = sigma_NT)
   od_AMP<-rnorm(5,mean = mean_NT, sd = sigma_NT)
   
   result_of_t_test<-t.test(od_AMP,od_NT,alternative =  "less")
@@ -26,7 +26,7 @@ for( i in 1:N_noEffect)
 
 for( i in N_noEffect+(1:N_effect))
 {
- # od_NT<-rnorm(4,mean = mean_NT, sd = sigma_NT)
+ #od_NT<-rnorm(4,mean = mean_NT, sd = sigma_NT)
   od_AMP<-rnorm(5,mean = mean_AMP, sd = sigma_AMP)
   
   result_of_t_test<-t.test(od_AMP,od_NT,alternative =  "less")
@@ -93,6 +93,17 @@ my_colors_1<-c(
 #   ncol=2)
 
 
+tbl1 %>% ggplot(aes(x=p, fill=factor(type,levels =c("operative","no-effect") ))) +  
+  geom_histogram(breaks=seq(from=0, to=1, by = 0.01)) +
+  geom_vline(xintercept = 0.05, color="red" , linetype="dashed")+
+  geom_text(x = 0.05, y=0,label= "p=0.05",  color="red", angle=90, hjust=-4, vjust=-0.3)+
+  scale_fill_manual(values = c("operative"="pink2", "no-effect"="blue"))+
+  labs(title="raw p-values" , fill="valodi tipus") 
+
+ggsave(filename = "out/undersatndig-of-FDR/hitogram-twoColor.jpg")
+
+
+
 cowplot::plot_grid(
   
   
@@ -100,13 +111,19 @@ cowplot::plot_grid(
     geom_histogram(breaks=seq(from=0, to=1, by = 0.01)) +
     geom_vline(xintercept = 0.05, color="red" , linetype="dashed")+
     geom_text(x = 0.05, y=0,label= "p=0.05",  color="red", angle=90, hjust=-4, vjust=-0.3)+
-    labs(title="raw p-values") ,
+    labs(title="raw p-values" , fill="valodi tipus") ,
   
   
   tbl1 %>% ggplot(aes(x=p_fdr, fill=factor(type,levels =c("operative","no-effect") ))) +  
     geom_histogram(breaks=seq(from=0, to=1, by = 0.01)) +
     geom_vline(xintercept = 0.05, color="red" , linetype="dashed")+
     geom_text(x = 0.05, y=0,label= "p=0.05",  color="red", angle=90, hjust=-4, vjust=-0.3)+
-    labs(title="FDR") ,
+    geom_vline(xintercept = 0.10, color="red" , linetype="dashed")+
+    geom_text(x = 0.10, y=0,label= "p=0.10",  color="red", angle=90, hjust=-4, vjust=-0.3)+
+    
+    labs(title="FDR", fill="valodi tipus") ,
   ncol=1
 )
+
+ggsave(filename = "out/undersatndig-of-FDR/hitogram-dual.jpg")
+
