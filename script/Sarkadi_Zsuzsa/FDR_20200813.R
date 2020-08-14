@@ -49,3 +49,37 @@ tbl1 %>%
     ggplot(aes(x=p))+geom_histogram(color="black", fill="white", binwidth = 0.10)+
     geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)
 ggsave("out/undersatndig-of-FDR/histogram_pvalue_largebin.jpg")
+
+#Alfeladat 5
+tbl2 <- tibble(experiment_id=character(), p=numeric(), type=character())
+for(i in 1:5000) {
+  kezeletlen <- rnorm(4, mean=1.2, sd=0.25)
+  kezeltAMP <- rnorm(5, mean=1.2, sd=0.25)
+  result_ttest <- t.test(kezeletlen, kezeltAMP)
+  tbl2 <- tbl2 %>% add_row(experiment_id=sprintf("exp_%03i",i), 
+                           p=result_ttest$p.value, type="NT-AMP")
+}
+
+tbl2 %>%
+  ggplot(aes(x=p))+geom_histogram(color="black", fill="white")+
+  geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1) 
+ggsave("out/undersatndig-of-FDR/histogram_pvalue_2.jpg")
+
+tbl2 %>%
+  ggplot(aes(x=p))+geom_histogram(color="black", fill="white", binwidth = 0.10)+
+  geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)
+ggsave("out/undersatndig-of-FDR/histogram_pvalue_largebin_2.jpg")
+
+#Alfeladat 6
+#p értékek hány százaléka szignifikáns ( <0.05) az egyik és a másik szimuláció esetén?
+
+signif_1<- tbl1 %>% 
+  count(p<0.05) 
+
+221/5000
+# result: 4.42%
+
+signif_2<- tbl2 %>% 
+  count(p<0.05) 
+248/5000
+# result 4.96%
