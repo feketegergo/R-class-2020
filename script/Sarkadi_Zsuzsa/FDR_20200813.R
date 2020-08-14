@@ -130,3 +130,32 @@ ggsave("out/undersatndig-of-FDR/histogram_pvalue_feladat8.jpg")
 #Alfeladat9
 tbl4 <- tbl4 %>% 
   mutate(p_fdr=p.adjust(p, method="fdr"))
+tbl4 %>%
+  ggplot(aes(x=p_fdr, fill=type))+geom_histogram(bins=100)+
+  geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1) 
+ggsave("out/undersatndig-of-FDR/histogram_p_fdr_feladat9.jpg")
+
+#TRUE POSITIVE
+TRUE_POSITIVE <- tbl4 %>% 
+  filter(p<0.05) %>% 
+  count(type=="NT-hatasos")
+TRUE_POSITIVE[2,2]
+#239
+
+FALSE_POSITIVE <- tbl4 %>% 
+  filter(p<0.05) %>% 
+  count(type=="NT-hatastalan")
+FALSE_POSITIVE[2,2]
+#134
+
+TRUE_NEGATIVE <- tbl4 %>% 
+  filter(p>0.05) %>% 
+  count(type=="NT-hatastalan")
+TRUE_NEGATIVE[2,2]
+#3886
+
+FALSE_NEGATIVE <- tbl4 %>% 
+  filter(p>0.05) %>% 
+  count(type=="NT-hatasos")
+FALSE_NEGATIVE[2,2]
+#161
