@@ -109,15 +109,15 @@ signif_3<- tbl3 %>%
 tbl4 <- tibble(experiment_id=character(), p=numeric(), type=character())
 
 for(i in 1:400) {
-  kezeletlen <- rnorm(3, mean=2, sd=0.25)
-  kezeltAMP <- rnorm(3, mean=1.1, sd=0.4)
+  kezeletlen <- rnorm(5, mean=2, sd=0.25)
+  kezeltAMP <- rnorm(5, mean=1.1, sd=0.4)
   result_ttest1 <- t.test(kezeletlen, kezeltAMP)
   tbl4 <- tbl4 %>% add_row(experiment_id=sprintf("exp_%03i",i), 
                            p=result_ttest1$p.value, type="NT-hatasos")
 }
 for(i in 1:4000) {
-  kezeletlen <- rnorm(3, mean=1.4, sd=0.25)
-  kezeltAMP <- rnorm(3, mean=1.4, sd=0.25)
+  kezeletlen <- rnorm(5, mean=1.4, sd=0.25)
+  kezeltAMP <- rnorm(5, mean=1.4, sd=0.25)
   result_ttest2 <- t.test(kezeletlen, kezeltAMP)
   tbl4 <- tbl4 %>% add_row(experiment_id=sprintf("exp_%03i",i), 
                            p=result_ttest2$p.value, type="NT-hatastalan")
@@ -140,22 +140,60 @@ TRUE_POSITIVE <- tbl4 %>%
   filter(p<0.05) %>% 
   count(type=="NT-hatasos")
 TRUE_POSITIVE[2,2]
-#239
+#383
 
 FALSE_POSITIVE <- tbl4 %>% 
   filter(p<0.05) %>% 
   count(type=="NT-hatastalan")
 FALSE_POSITIVE[2,2]
-#134
+#197
 
 TRUE_NEGATIVE <- tbl4 %>% 
   filter(p>0.05) %>% 
   count(type=="NT-hatastalan")
 TRUE_NEGATIVE[2,2]
-#3886
+#3803
 
 FALSE_NEGATIVE <- tbl4 %>% 
   filter(p>0.05) %>% 
   count(type=="NT-hatasos")
 FALSE_NEGATIVE[2,2]
-#161
+#17
+
+#precision: true positives/sampled positives
+#recall (sensitivity): true positives/ all positives
+
+precision <- 383/400
+precision
+#95.75%
+#recall?
+
+#p_FDR
+TRUE_POSITIVE <- tbl4 %>% 
+  filter(p_fdr<0.05) %>% 
+  count(type=="NT-hatasos")
+TRUE_POSITIVE[2,2]
+#162
+
+FALSE_POSITIVE <- tbl4 %>% 
+  filter(p_fdr<0.05) %>% 
+  count(type=="NT-hatastalan")
+FALSE_POSITIVE[2,2]
+#8
+
+TRUE_NEGATIVE <- tbl4 %>% 
+  filter(p_fdr>0.05) %>% 
+  count(type=="NT-hatastalan")
+TRUE_NEGATIVE[2,2]
+#3993
+
+FALSE_NEGATIVE <- tbl4 %>% 
+  filter(p_fdr>0.05) %>% 
+  count(type=="NT-hatasos")
+FALSE_NEGATIVE[2,2]
+#238
+#-->false negative increased
+
+precision <- 162/400
+precision
+#40.5%
