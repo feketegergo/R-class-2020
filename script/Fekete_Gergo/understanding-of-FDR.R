@@ -23,12 +23,16 @@ for( i in 1:N)
 tbl1 %>% ggplot(aes(x=p))+
   geom_histogram(breaks=seq(from=0, to=1, by = 0.05)) +
   geom_vline(xintercept = 0.05, color="red" , linetype="dashed")+
-  labs(title = "Histogram finom nagy bin-ekkel")
+  labs(title = "Histogram nagy bin-ekkel")
+
+dir.create("out/undersatndig-of-FDR")
+ggsave(filename = "out/undersatndig-of-FDR/hitogram1.jpg")
 
 tbl1 %>%  ggplot(aes(x=p))+
   geom_histogram(breaks=seq(from=0, to=1, by = 0.01)) +
   geom_vline(xintercept = 0.05, color="red" , linetype="dashed")+
   labs(title = "Histogram finom bin felosztassal")
+ggsave(filename = "out/undersatndig-of-FDR/hitogram2.jpg")
 
 tbl1 %>%  ggplot(aes(x=p)) +
   geom_abline(color="blue", linetype="dotted")+stat_ecdf() +
@@ -56,6 +60,7 @@ tbl1 %>%  ggplot(aes(x=p))+
   geom_vline(xintercept = 0.05, color="red" , linetype="dashed")+
   labs(title = "Histogram finom bin felosztassal")
 
+# CDF plot - ez az integrálja a hisztogramnak. Szokatlanabb, de a zaj kevésbé zavaró rajta
 tbl1 %>%  ggplot(aes(x=p)) +
   geom_abline(color="blue", linetype="dotted", size=1.5)+
   stat_ecdf() +
