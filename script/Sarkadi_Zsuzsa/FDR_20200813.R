@@ -41,13 +41,15 @@ library(ggplot2)
 tbl1 %>%
   ggplot(aes(x=p))+geom_histogram(color="black", fill="white", breaks=seq(from=0, to=1, by=0.05))+
   geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)+
-  geom_text(x=0.05, y=0, label="p=0.05", color="red", angle=90, hjust=-1, vjust=-0.3)
+  geom_text(x=0.05, y=0, label="p=0.05", color="red", angle=90, hjust=-1, vjust=-0.3)+
+  labs(title="P-value, large bin")
   ggsave("out/undersatndig-of-FDR/histogram_pvalue.jpg")
   
 tbl1 %>%
     ggplot(aes(x=p))+geom_histogram(color="black", fill="white", breaks=seq(from=0, to=1, by=0.01))+
     geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)+
-  geom_text(x=0.05, y=0, label="p=0.05", color="red", angle=90, hjust=-1, vjust=-0.3)
+  geom_text(x=0.05, y=0, label="p=0.05", color="red", angle=90, hjust=-1, vjust=-0.3)+
+  labs(title="P-value, fine bins")
 ggsave("out/undersatndig-of-FDR/histogram_pvalue_largebin.jpg")
 
 #Alfeladat 5
@@ -63,13 +65,15 @@ for(i in 1:5000) {
 tbl2 %>%
   ggplot(aes(x=p))+geom_histogram(color="black", fill="white", breaks=seq(from=0, to=1, by=0.05))+
   geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)+
-  geom_text(x=0.05, y=0, label="p=0.05", color="red", angle=90, hjust=-1, vjust=-0.3)
+  geom_text(x=0.05, y=0, label="p=0.05", color="red", angle=90, hjust=-1, vjust=-0.3)+
+  labs(title="P-value, large bins")
 ggsave("out/undersatndig-of-FDR/histogram_pvalue_2.jpg")
 
 tbl2 %>%
   ggplot(aes(x=p))+geom_histogram(color="black", fill="white", breaks=seq(from=0, to=1, by=0.01))+
   geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)+
-  geom_text(x=0.05, y=0, label="p=0.05", color="red", angle=90, hjust=-1, vjust=-0.3)
+  geom_text(x=0.05, y=0, label="p=0.05", color="red", angle=90, hjust=-1, vjust=-0.3)+
+  labs(title="P-value, fine bins")
 ggsave("out/undersatndig-of-FDR/histogram_pvalue_largebin_2.jpg")
 
 #Alfeladat 6
@@ -129,9 +133,10 @@ for(i in 1:4000) {
 
 library(ggplot2)
 tbl4 %>%
-  ggplot(aes(x=p))+geom_histogram(bins=100)+
+  ggplot(aes(x=p, fill=type))+geom_histogram(bins=100)+
   geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)+
-  scale_fill_manual(values=c("red","green"))
+  scale_fill_manual(values=c("red","green"))+
+  labs(title="P-values" )
 ggsave("out/undersatndig-of-FDR/histogram_pvalue_feladat8.jpg")
 
 #Alfeladat9
@@ -139,7 +144,9 @@ tbl4 <- tbl4 %>%
   mutate(p_fdr=p.adjust(p, method="fdr"))
 tbl4 %>%
   ggplot(aes(x=p_fdr, fill=type))+geom_histogram(bins=100)+
-  geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1) 
+  geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)+
+  scale_fill_manual(values=c("red", "green"))+
+  labs(title="fdr modified P-values")
 ggsave("out/undersatndig-of-FDR/histogram_p_fdr_feladat9.jpg")
 
 #TRUE POSITIVE
