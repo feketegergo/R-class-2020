@@ -41,11 +41,11 @@ library(ggplot2)
 tbl1 %>%
   ggplot(aes(x=p))+geom_histogram(color="black", fill="white")+
   geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1) 
-  ggsave("out/undersatndig-of-FDR/histogram_pvalue.jpg")
-  
+ggsave("out/undersatndig-of-FDR/histogram_pvalue.jpg")
+
 tbl1 %>%
-    ggplot(aes(x=p))+geom_histogram(color="black", fill="white", binwidth = 0.10)+
-    geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)
+  ggplot(aes(x=p))+geom_histogram(color="black", fill="white", binwidth = 0.10)+
+  geom_vline(aes(xintercept = 0.05), color="red", linetype="dashed", size=1)
 ggsave("out/undersatndig-of-FDR/histogram_pvalue_largebin.jpg")
 
 #Alfeladat 5
@@ -160,9 +160,7 @@ FALSE_NEGATIVE <- tbl4 %>%
 FALSE_NEGATIVE[2,2]
 #17
 
-#precision: true positives/sampled positives
-#recall (sensitivity): true positives/ all positives
-
+# %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% 
 precision <- 383/400
 precision
 #95.75%
