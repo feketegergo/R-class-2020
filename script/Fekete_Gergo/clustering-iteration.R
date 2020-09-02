@@ -1,3 +1,7 @@
+#  Ezt a scriptet ne nézzétek, csak magamnak kipróbáltam mi történik,
+# ha a távolságmátrixból újabb távolság mátrixot számolok es azt iteralom.
+
+
 
 library(tidyverse)
 
